@@ -41,9 +41,4 @@ export type DisplayPokemon = Omit<Pokemon, 'sprites'| 'stats' | 'abilities'> & {
     stats: Statistics[];
     abilities: Ability[];
 }
-  
-export interface PokemonDelta { 
-    delta: number; 
-    min: number; 
-    max: number;
-}
+
