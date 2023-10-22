@@ -1,9 +1,10 @@
 import { Component, TemplateRef } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { PokemonComponent } from './pokemon/pokemon/pokemon.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, PokemonComponent],
   template: `
     <div>
       <h2>ngIf</h2>
@@ -23,6 +24,7 @@ import { NgIf } from '@angular/common';
         }
       </div>
       <button (click)="increment()">Click me</button>
+      <app-pokemon />
     </div>
     <ng-template #template2>
       <ng-container *ngIf="value < 15 else template3">
