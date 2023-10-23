@@ -5,7 +5,7 @@ import { Ability } from '../interfaces/pokemon.interface';
   selector: 'app-pokemon-abilities',
   standalone: true,
   template: `
-    <p>Abilities</p>
+    <p class="heading">Abilities</p>
     @for (ability of abilities; track ability.name) {
       <div class="abilities">
         <label for="ability_name">
@@ -22,10 +22,6 @@ import { Ability } from '../interfaces/pokemon.interface';
   styles: [`
     :host {
       display: block;
-    }
-
-    p {
-      margin-bottom: 0.25rem;
     }
 
     .abilities {

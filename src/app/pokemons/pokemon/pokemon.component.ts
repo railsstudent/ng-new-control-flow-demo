@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Injector, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PokemonDetails } from '../interfaces/pokemon-details.interface';
@@ -7,36 +7,17 @@ import { PokemonAbilitiesComponent } from '../pokemon-abilities/pokemon-abilitie
 import { PokemonStatisticsComponent } from '../pokemon-statistics/pokemon-statistics.component';
 import { PokemonService } from '../services/pokemon.service';
 import { toPage } from '../utilities/page.utility';
+import { PokemonPhysicalComponent } from '../pokemon-physical/pokemon-physical.component';
 
 @Component({
   selector: 'app-pokemon',
   standalone: true,
-  imports: [NgIf, AsyncPipe, PokemonStatisticsComponent, PokemonAbilitiesComponent],
+  imports: [NgIf, AsyncPipe, PokemonStatisticsComponent, PokemonAbilitiesComponent, PokemonPhysicalComponent],
   template: `
     <div class="content">
       <ng-container *ngIf="pokemonDetails$ | async as pokemonDetails">
         @if (pokemonDetails) {
-          <img [src]="pokemonDetails.frontShiny" alt="pokemon image" width="100" height="100" />
-          <div class="physical">
-            <label for="id">
-              <span>Id: </span><span id="id" name="id">{{ pokemonDetails.id }}</span>            
-            </label>
-            <label for="name">
-              <span>Name: </span><span id="name" name="name">{{ pokemonDetails.name }}</span>            
-            </label>
-            <label for="weight">
-              <span>Weight: </span><span id="weight" name="weight">{{ pokemonDetails.weight }}</span>            
-            </label>
-            <label for="height">
-              <span>Height: </span><span id="height" name="height">{{ pokemonDetails.height }}</span>            
-            </label>
-            <label for="color">
-              <span>Color: </span><span id="color" name="color">{{ pokemonDetails.color }}</span>            
-            </label>
-            <label for="shape">
-              <span>Shape: </span><span id="shape" name="shape">{{ pokemonDetails.shape }}</span>            
-            </label>
-          </div>
+          <app-pokemon-physical [pokemonDetails]="pokemonDetails" />
           <app-pokemon-statistics [statistics]="pokemonDetails.stats" />
           <app-pokemon-abilities [abilities]="pokemonDetails.abilities" />
         } @else {
@@ -57,15 +38,6 @@ import { toPage } from '../utilities/page.utility';
       padding: 1rem;
       display: flex;
       flex-direction: column;
-    }
-
-    .physical {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .physical > label {
-      margin-right: 1rem;
     }
 
     .button-bar {
@@ -94,7 +66,6 @@ export class PokemonComponent {
 
   pokemonService = inject(PokemonService);
   router = inject(Router);
-  injector = inject(Injector);
   pokemonDetails$!: Observable<PokemonDetails | undefined>;
 
   backToPage() {

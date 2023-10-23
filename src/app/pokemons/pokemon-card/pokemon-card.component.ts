@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
-import { PokemonService } from '../services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-card',

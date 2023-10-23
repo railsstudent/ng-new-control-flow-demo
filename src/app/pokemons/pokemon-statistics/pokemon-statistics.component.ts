@@ -5,7 +5,7 @@ import { Statistics } from '../interfaces/pokemon.interface';
   selector: 'app-pokemon-statistics',
   standalone: true,
   template: `
-    <p>Statistics</p>
+    <p class="heading">Statistics</p>
     @for (stat of statistics; track stat.name) {
       <div class="stats">
         <label for="stat_name">
@@ -25,10 +25,6 @@ import { Statistics } from '../interfaces/pokemon.interface';
   styles: [`
     :host {
       display: block;
-    }
-
-    p {
-      margin-bottom: 0.25rem;
     }
 
     .stats {
