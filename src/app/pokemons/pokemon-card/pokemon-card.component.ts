@@ -53,10 +53,6 @@ import { PokemonService } from '../services/pokemon.service';
       justify-content: center;
       padding-left: 1rem;
     }
-
-    .details > label {
-      margin-bottom: 0.25rem;
-    }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

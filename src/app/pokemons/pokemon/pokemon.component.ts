@@ -1,17 +1,17 @@
-import { Statistics } from './../interfaces/pokemon.interface';
-import { ChangeDetectionStrategy, Component, Injector, Input, Signal, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Injector, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { PokemonDetails } from '../interfaces/pokemon-details.interface';
+import { PokemonAbilitiesComponent } from '../pokemon-abilities/pokemon-abilities.component';
+import { PokemonStatisticsComponent } from '../pokemon-statistics/pokemon-statistics.component';
 import { PokemonService } from '../services/pokemon.service';
 import { toPage } from '../utilities/page.utility';
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon',
   standalone: true,
-  imports: [NgIf, AsyncPipe],
+  imports: [NgIf, AsyncPipe, PokemonStatisticsComponent, PokemonAbilitiesComponent],
   template: `
     <div class="content">
       <ng-container *ngIf="pokemonDetails$ | async as pokemonDetails">
@@ -37,35 +37,8 @@ import { Observable } from 'rxjs';
               <span>Shape: </span><span id="shape" name="shape">{{ pokemonDetails.shape }}</span>            
             </label>
           </div>
-          <p>Statistics</p>
-          @for (stat of pokemonDetails.stats; track stat.name) {
-            <div class="stats">
-              <label for="stat_name">
-                <span>Name: </span><span id="stat_name" name="stat_name">{{ stat.name }}</span>            
-              </label>
-              <label for="stat_effort">
-                <span>Effort: </span><span id="stat_effort" name="stat_effort">{{ stat.effort }}</span>            
-              </label>
-              <label for="stat_baseStat">
-                <span>Base Stat: </span><span id="stat_baseStat" name="stat_baseStat">{{ stat.baseStat }}</span>            
-              </label>
-            </div>
-          } @empty {
-            <p>No statistics</p>
-          }
-          <p>Abilities</p>
-          @for (ability of pokemonDetails.abilities; track ability.name) {
-            <div class="abilities">
-              <label for="ability_name">
-                <span>Name: </span><span id="ability_name" name="ability_name">{{ ability.name }}</span>            
-              </label>
-              <label for="ability_isHidden">
-                <span>Effort: </span><span id="ability_isHidden" name="ability_isHidden">{{ ability.isHidden ? 'Yes' : 'No' }}</span>            
-              </label>
-            </div>
-          } @empty {
-            <p>No Ability</p>
-          }
+          <app-pokemon-statistics [statistics]="pokemonDetails.stats" />
+          <app-pokemon-abilities [abilities]="pokemonDetails.abilities" />
         } @else {
           <p>Pokemone does not exist</p>
         }
@@ -95,10 +68,6 @@ import { Observable } from 'rxjs';
       margin-right: 1rem;
     }
 
-    label {
-      margin-bottom: 0.25rem;
-    }
-
     .button-bar {
       padding: 1rem;
     }
@@ -108,19 +77,8 @@ import { Observable } from 'rxjs';
       border-radius: 4px;
     }
 
-    .stats, .abilities {
-      width: 60%;
-      display: flex;
-    }
-
-    .stats > label, .abilities > label {
-      flex-basis: 33.33%;
-      flex-grow: 1;
-      flex-shrink: 1;
-    }
-
-    .stats > label > span:first-of-type, label > span:first-of-type {
-      color: #aaa;
+    app-pokemon-statistics {
+      margin-bottom: 0.5rem;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
