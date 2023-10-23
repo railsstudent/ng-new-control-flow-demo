@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
+import { PokemonService } from '../services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-card',
   standalone: true,
+  imports: [RouterLink],
   template: `
     <div class="card">
       <div class="image">
@@ -15,7 +17,8 @@ import { DisplayPokemon } from '../interfaces/pokemon.interface';
           <span>Id: </span><span id="id" name="id">{{ pokemon.id }}</span>
         </label>
         <label for="name">
-          <span>Name: </span><span id="name" name="name">{{ pokemon.name }}</span>
+          <span>Name: </span>
+          <a [routerLink]="['pokemon', pokemon.id]"><span id="name" name="name">{{ pokemon.name }}</span></a>
         </label>
         <label for="weight">
           <span>Weight: </span><span id="weight" name="weight">{{ pokemon.weight }}</span>

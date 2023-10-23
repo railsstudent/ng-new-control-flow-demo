@@ -7,6 +7,11 @@ export const routes: Routes = [
             .then((m) => m.PokemonListComponent),
     },
     {
+        path: 'list/pokemon/:id',
+        loadComponent: () => import('./pokemons/pokemon/pokemon.component')
+            .then((m) => m.PokemonComponent),
+    },
+    {
         path: '',
         pathMatch: 'full',
         redirectTo: 'list',

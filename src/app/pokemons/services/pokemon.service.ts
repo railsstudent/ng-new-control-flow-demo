@@ -15,6 +15,8 @@ const pokemonTransformer = (pokemon: Pokemon): DisplayPokemon => {
   }
 }
 
+const PAGE_SIZE = 30;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,8 +25,12 @@ export class PokemonService {
 
   currentPage = signal(0);
 
+  getPageSize() {
+    return PAGE_SIZE;
+  }
+
   getPokemons(): Observable<DisplayPokemon[]> {
-    const pageSize = 30;
+    const pageSize = this.getPageSize();
     const pokemonIds = [...Array(pageSize).keys()]
       .map((n) => pageSize * this.currentPage() + (n + 1));
 

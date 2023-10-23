@@ -20,10 +20,10 @@ import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
       </div>
       <div class="pagination-bar">
         <ul>
-          @for (page of pages; track $index) {
+          @for (page of pages; track page) {
             <li>
-              <a routerLink="#" routerLinkActive="active" 
-                (click)="currentPage.set($index)">Page {{ $index + 1 }}</a>
+              <a [routerLink]="['../list']" [queryParams]="{ page: page + 1 }" (click)="currentPage.set(page)" 
+                routerLinkActive="active">Page {{ page + 1 }}</a>
             </li>
           }
         </ul>
@@ -49,7 +49,12 @@ import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
     }
 
     div.container {
-      padding: 1rem;
+      padding: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .pagination-bar {
+      margin: 1rem 0;
     }
 
     .active {
@@ -59,14 +64,6 @@ import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
     .card-layout {
       display: flex;
       flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
-
-    .card-layout  > * {
-      flex-basis: 25%;
-      flex-grow: 0;
-      flex-shrink: 1;
-      margin: 0 20px;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
