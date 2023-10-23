@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
-import { PokemonService } from '../services/pokemon.service';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
+import { PokemonService } from '../services/pokemon.service';
+import { toPage } from '../utilities/page.utility';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -68,7 +69,10 @@ import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PokemonListComponent {
+export class PokemonListComponent implements OnInit {
+  @Input({ transform: (value: string) => toPage(value, 1) })
+  page = 1;
+
   pages = [...Array(10).keys()];
 
   pokemonService = inject(PokemonService);
@@ -77,4 +81,8 @@ export class PokemonListComponent {
     toObservable(this.currentPage).pipe(switchMap(() => this.pokemonService.getPokemons())), 
     { initialValue: [] as DisplayPokemon[] }
   );
+
+  ngOnInit(): void {
+    this.currentPage.set(this.page - 1);
+  }
 }

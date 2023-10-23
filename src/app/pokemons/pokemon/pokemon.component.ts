@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, inject, numberAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PokemonService } from '../services/pokemon.service';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { PokemonService } from '../services/pokemon.service';
+import { toPage } from '../utilities/page.utility';
 
 @Component({
   selector: 'app-pokemon',
@@ -40,14 +41,14 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonComponent {
-  @Input({ required: true, transform: (x: string) => parseInt(x, 10) })
+  @Input({ required: true, transform: (id: string) => toPage(id, 1) })
   id!: number;
 
   pokemonService = inject(PokemonService);
   router = inject(Router);
 
   backToPage() {
-    const page = Math.ceil(this.id / this.pokemonService.getPageSize());
+    const page = this.pokemonService.getPage(this.id);
     this.pokemonService.currentPage.set(page - 1);
     this.router.navigate(['/list'], { queryParams: { page }});
   }

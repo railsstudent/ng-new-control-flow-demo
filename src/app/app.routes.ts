@@ -14,10 +14,10 @@ export const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'list',
+        redirectTo: '/list?page=1',
     },
     {
         path: '**',
-        redirectTo: 'list',
+        redirectTo: '/list?page=1',
     }
 ];
