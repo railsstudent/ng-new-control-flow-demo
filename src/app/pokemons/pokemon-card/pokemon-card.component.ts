@@ -43,7 +43,7 @@ import { DisplayPokemon } from '../interfaces/pokemon.interface';
     .image {
       display: flex;
       justify-content: center;
-      align-item: center;
+      align-items: center;
     }
 
     .details {

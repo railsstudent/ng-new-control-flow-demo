@@ -38,9 +38,13 @@ import { toPage } from '../utilities/page';
 
     ul {
       list-style-type: none;
-      width: 50%;
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      justify-content: left;
+    }
+
+    ul li {
+      margin-right: 0.5rem;
     }
 
     h2 {
