@@ -17,9 +17,17 @@ import { PokemonPhysicalComponent } from '../pokemon-physical/pokemon-physical.c
     <div class="content">
       <ng-container *ngIf="pokemonDetails$ | async as pokemonDetails">
         @if (pokemonDetails) {
-          <app-pokemon-physical [pokemonDetails]="pokemonDetails" />
-          <app-pokemon-statistics [statistics]="pokemonDetails.stats" />
-          <app-pokemon-abilities [abilities]="pokemonDetails.abilities" />
+          @defer {
+            <app-pokemon-physical [pokemonDetails]="pokemonDetails" />
+            <app-pokemon-statistics [statistics]="pokemonDetails.stats" />
+            <app-pokemon-abilities [abilities]="pokemonDetails.abilities" />
+          } @loading (after 100ms; minimum 200ms) {
+            <p>Loading....</p>
+          } @placeholder (minimum 100ms) {
+            <p>No Data</p>
+          } @error {
+            <p>Failed to load dependencies</p>
+          }
         } @else {
           <p>Pokemone does not exist</p>
         }

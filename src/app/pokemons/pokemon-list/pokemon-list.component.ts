@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
@@ -16,8 +15,16 @@ import { toPage } from '../utilities/page';
     <div class="container">
       <h2>Pokemon List</h2>
       <div class="card-layout">
-        @for (pokemon of pokemons(); track pokemon.id) {
-          <app-pokemon-card [pokemon]="pokemon" />
+        @defer {
+          @for (pokemon of pokemons(); track pokemon.id) {
+            <app-pokemon-card [pokemon]="pokemon" />
+          }
+        } @loading (after 100ms; minimum 200ms) {
+          <p>Loading....</p>
+        } @placeholder (minimum 100ms) {
+          <p>No Pokemon Data</p>
+        } @error {
+          <p>Failed to load dependencies</p>
         }
       </div>
       <app-pokemon-pagination /> 
