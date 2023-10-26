@@ -4,13 +4,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
+import { PokemonPaginationComponent } from '../pokemon-pagination/pokemon-pagination.component';
 import { PokemonService } from '../services/pokemon.service';
 import { toPage } from '../utilities/page';
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, PokemonCardComponent],
+  imports: [PokemonCardComponent, PokemonPaginationComponent],
   template: `
     <div class="container">
       <h2>Pokemon List</h2>
@@ -19,32 +20,12 @@ import { toPage } from '../utilities/page';
           <app-pokemon-card [pokemon]="pokemon" />
         }
       </div>
-      <div class="pagination-bar">
-        <ul>
-          @for (page of pages; track page) {
-            <li>
-              <a [routerLink]="['../list']" [queryParams]="{ page: page + 1 }" (click)="currentPage.set(page)" 
-                routerLinkActive="active">Page {{ page + 1 }}</a>
-            </li>
-          }
-        </ul>
-      </div>
+      <app-pokemon-pagination /> 
     </div>
   `,
   styles: [`
     :host {
       display: block;
-    }
-
-    ul {
-      list-style-type: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: left;
-    }
-
-    ul li {
-      margin-right: 0.5rem;
     }
 
     h2 {
@@ -56,14 +37,6 @@ import { toPage } from '../utilities/page';
     div.container {
       padding: 0.75rem;
       margin-bottom: 2rem;
-    }
-
-    .pagination-bar {
-      margin: 1rem 0;
-    }
-
-    .active {
-      color: green;
     }
 
     .card-layout {
@@ -81,8 +54,6 @@ export class PokemonListComponent {
     this.pageValue = value;
     this.currentPage.set(this.pageValue - 1);
   } 
-
-  pages = [...Array(10).keys()];
 
   pokemonService = inject(PokemonService);
   currentPage = this.pokemonService.currentPage;
