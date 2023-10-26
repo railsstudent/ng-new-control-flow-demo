@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { Observable, catchError, forkJoin, map, of, retry, switchMap, tap } from 'rxjs';
+import { EMPTY, Observable, catchError, forkJoin, map, retry, switchMap } from 'rxjs';
 import { PokemonDetails, PokemonSpecies } from '../interfaces/pokemon-details.interface';
 import { Ability, DisplayPokemon, Pokemon, Statistics } from '../interfaces/pokemon.interface';
 
@@ -23,11 +23,7 @@ export class PokemonService {
     const pokemonIds = [...Array(pageSize).keys()]
       .map((n) => pageSize * this.currentPage() + (n + 1));
 
-    return forkJoin(pokemonIds.map((id) => this.get(id)))
-      .pipe(
-        map(x => x.filter(x => x)),
-        map(x => x as DisplayPokemon[])
-      );
+    return forkJoin(pokemonIds.map((id) => this.get(id)));
   }
 
   private pokemonTransformer(pokemon: Pokemon): DisplayPokemon {
@@ -42,13 +38,16 @@ export class PokemonService {
     }
   }
   
-  private get(id: number): Observable<DisplayPokemon | undefined> {
+  private get(id: number): Observable<DisplayPokemon> {
     return this.httpClient
       .get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
       .pipe(
         map((pokemon) => this.pokemonTransformer(pokemon)),
         retry(3),
-        catchError(() => of(undefined)),
+        catchError((err) => { 
+          console.error(err);
+          return EMPTY; 
+        }),
       );
   }
 
@@ -80,7 +79,7 @@ export class PokemonService {
     }
   }
 
-  getPokemonDetails(id: number): Observable<PokemonDetails | undefined> {
+  getPokemonDetails(id: number): Observable<PokemonDetails> {
     return this.httpClient.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
       .pipe(
         switchMap((pokemon) => 
@@ -88,10 +87,9 @@ export class PokemonService {
           .pipe(
             map((species) => this.pokemonDetailsTransformer(pokemon, species)),
             retry(3),
-            tap((data) => console.log(data)),
             catchError((err) => {
               console.error(err);
-              return of(undefined);
+              return EMPTY;
             }),
           )
       ),
