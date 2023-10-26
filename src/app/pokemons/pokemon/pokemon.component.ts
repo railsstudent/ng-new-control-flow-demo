@@ -6,7 +6,7 @@ import { PokemonDetails } from '../interfaces/pokemon-details.interface';
 import { PokemonAbilitiesComponent } from '../pokemon-abilities/pokemon-abilities.component';
 import { PokemonStatisticsComponent } from '../pokemon-statistics/pokemon-statistics.component';
 import { PokemonService } from '../services/pokemon.service';
-import { toPage } from '../utilities/page.utility';
+import { toPage } from '../utilities/page';
 import { PokemonPhysicalComponent } from '../pokemon-physical/pokemon-physical.component';
 
 @Component({

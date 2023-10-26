@@ -1,11 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
-function setTitle() {
-  const titleService = inject(Title);
-  titleService.setTitle('Pokemon Demo - New control flow')
-}
+import { setTitle } from './pokemons/utilities/title';
 
 @Component({
   selector: 'app-root',

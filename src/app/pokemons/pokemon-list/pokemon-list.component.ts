@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 import { PokemonService } from '../services/pokemon.service';
-import { toPage } from '../utilities/page.utility';
+import { toPage } from '../utilities/page';
 
 @Component({
   selector: 'app-pokemon-list',
