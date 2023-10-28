@@ -46,6 +46,5 @@ import { PokemonService } from '../services/pokemon.service';
 })
 export class PokemonPaginationComponent {
   pages = [...Array(10).keys()];
-  pokemonService = inject(PokemonService);
-  currentPage = this.pokemonService.currentPage;
+  currentPage = inject(PokemonService).currentPage;
 }

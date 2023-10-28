@@ -1,18 +1,15 @@
+import { TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { PokemonDetails } from '../interfaces/pokemon-details.interface';
-import { TitleCasePipe } from '@angular/common';
+import { PokemonAffliationComponent } from '../pokemon-affliation/pokemon-affliation.component';
 
 @Component({
   selector: 'app-pokemon-physical',
   standalone: true,
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, PokemonAffliationComponent],
   template: `
     <img [src]="pokemonDetails.frontShiny" alt="pokemon image" width="100" height="100" />
-    @if (pokemonDetails.name === 'pikachu') {
-      <p style="margin-bottom: 1rem;">{{ pokemonDetails.name | titlecase }} is in Team Ash.</p>
-    } @else if (pokemonDetails.name === 'meowth') {
-      <p style="margin-bottom: 1rem;">{{ pokemonDetails.name | titlecase }} is in Team Rocket.</p>
-    }
+    <app-pokemon-affliation [name]="pokemonDetails.name" />
     <div class="physical">
       <label for="id">
         <span>Id: </span><span id="id" name="id">{{ pokemonDetails.id }}</span>            
