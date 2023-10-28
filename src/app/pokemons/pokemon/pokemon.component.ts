@@ -57,7 +57,9 @@ import { PokemonPhysicalComponent } from '../pokemon-physical/pokemon-physical.c
       border-radius: 4px;
     }
 
-    app-pokemon-statistics {
+    app-pokemon-statistics,
+    app-pokemon-physical,
+    app-pokemon-abilities {
       margin-bottom: 0.5rem;
     }
   `],
