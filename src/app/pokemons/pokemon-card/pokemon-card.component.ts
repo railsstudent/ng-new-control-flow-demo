@@ -29,10 +29,6 @@ import { DisplayPokemon } from '../interfaces/pokemon.interface';
     </div>
   `,
   styles: [`
-    :host {
-      display: block;
-    }
-
     .card {
       border: 1px solid black;
       display: flex;

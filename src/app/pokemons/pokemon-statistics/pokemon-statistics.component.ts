@@ -23,10 +23,6 @@ import { Statistics } from '../interfaces/pokemon.interface';
     }
   `,
   styles: [`
-    :host {
-      display: block;
-    }
-
     .stats {
       width: 60%;
       display: flex;

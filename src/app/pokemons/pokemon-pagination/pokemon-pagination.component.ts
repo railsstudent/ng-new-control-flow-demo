@@ -19,10 +19,6 @@ import { PokemonService } from '../services/pokemon.service';
     </div>
   `,
   styles: [`
-  :host {
-    display: block;
-  }
-
   ul {
     list-style-type: none;
     display: flex;

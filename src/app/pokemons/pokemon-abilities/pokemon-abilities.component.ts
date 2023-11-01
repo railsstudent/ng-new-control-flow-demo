@@ -20,10 +20,6 @@ import { Ability } from '../interfaces/pokemon.interface';
     }
   `,
   styles: [`
-    :host {
-      display: block;
-    }
-
     .abilities {
       width: 60%;
       display: flex;

@@ -38,10 +38,6 @@ import { PokemonPhysicalComponent } from '../pokemon-physical/pokemon-physical.c
     </div>
   `,
   styles: [`
-    :host {
-      display: block;
-    }
-
     .content {
       padding: 1rem;
       display: flex;

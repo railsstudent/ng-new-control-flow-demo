@@ -23,10 +23,6 @@ import { AffiliationPipe } from '../../pipes/affiliation.pipe';
     }
   `,
   styles: [`
-    :host {
-      display: block;
-    }
-
     p.team {
       margin-bottom: 1rem;
     }

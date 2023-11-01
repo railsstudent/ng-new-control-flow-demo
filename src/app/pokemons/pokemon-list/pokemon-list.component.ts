@@ -31,10 +31,6 @@ import { toPage } from '../utilities/page';
     </div>
   `,
   styles: [`
-    :host {
-      display: block;
-    }
-
     h2 {
       text-decoration: underline;
       font-style: italic;

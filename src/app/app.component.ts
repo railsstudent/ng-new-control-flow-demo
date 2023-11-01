@@ -7,11 +7,7 @@ import { setTitle } from './pokemons/utilities/title';
   standalone: true,
   imports: [RouterOutlet],
   template: '<router-outlet></router-outlet>',
-  styles: [`
-    :host {
-      display: block;
-    }
-  `],
+  styles: [],
 })
 export class AppComponent {
   constructor() {

@@ -32,10 +32,6 @@ import { PokemonAffliationComponent } from '../pokemon-affliation/pokemon-afflia
     </div>
   `,
   styles: [`
-    :host {
-      display: block;
-    }
-
     .physical {
       display: flex;
       flex-wrap: wrap;
