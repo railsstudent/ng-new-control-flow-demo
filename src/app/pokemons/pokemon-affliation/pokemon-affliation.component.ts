@@ -10,15 +10,14 @@ import { AffiliationPipe } from '../../pipes/affiliation.pipe';
     @switch (name) {
       @case ('pikachu') {
         <p class="team">{{ name | titlecase | affiliation:'Ash' }}</p>
-      }
-      @case ('meowth') {
+      } @case ('meowth') {
         <p class="team">{{ name | titlecase | affiliation:'Rocket' }}</p>
-      }
-      @case ('staryu') {
+      } @case ('staryu') {
         <p class="team">{{ name | titlecase | affiliation:'Misty' }}</p>
-      } 
-      @case ('steelix') {
+      } @case ('steelix') {
         <p class="team">{{ name | titlecase | affiliation:'Brock' }}</p>
+      } @default {
+        <p class="team">Your team is unknown</p>
       }
     }
   `,
