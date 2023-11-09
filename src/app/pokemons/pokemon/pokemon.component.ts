@@ -21,9 +21,9 @@ import { PokemonPhysicalComponent } from '../pokemon-physical/pokemon-physical.c
             <app-pokemon-physical [pokemonDetails]="pokemonDetails" />
             <app-pokemon-statistics [statistics]="pokemonDetails.stats" />
             <app-pokemon-abilities [abilities]="pokemonDetails.abilities" />
-          } @loading (after 100ms; minimum 200ms) {
+          } @loading (after 500ms; minimum 200ms) {
             <p>Loading....</p>
-          } @placeholder (minimum 100ms) {
+          } @placeholder (minimum 500ms) {
             <p>No Data</p>
           } @error {
             <p>Failed to load dependencies</p>
