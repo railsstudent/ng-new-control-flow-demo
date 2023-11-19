@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
-import { EMPTY, Observable, catchError, forkJoin, map, retry, switchMap } from 'rxjs';
-import { Ability } from '../pokemon-abilities/interfaces/pokemon-abilities.interface';
-import { DisplayPokemon, Pokemon } from '../../interfaces/pokemon.interface';
+import { Injectable, inject } from '@angular/core';
+import { EMPTY, Observable, catchError, map, retry, switchMap } from 'rxjs';
+import { Pokemon } from '../../interfaces/pokemon.interface';
 import { PokemonDetails, PokemonSpecies } from '../interfaces/pokemon-details.interface';
+import { Ability } from '../pokemon-abilities/interfaces/pokemon-abilities.interface';
 import { Statistics } from '../pokemon-statistics/interfaces/pokemon-statistics.interface';
 
 const PAGE_SIZE = 30;
@@ -13,45 +13,6 @@ const PAGE_SIZE = 30;
 })
 export class PokemonDetailsService {
   private readonly httpClient = inject(HttpClient);
-
-  currentPage = signal(0);
-
-  getPage(pokemonId: number): number {
-    return Math.ceil(pokemonId / PAGE_SIZE);
-  }
-
-  getPokemons(): Observable<DisplayPokemon[]> {
-    const pageSize = PAGE_SIZE;
-    const pokemonIds = [...Array(pageSize).keys()]
-      .map((n) => pageSize * this.currentPage() + (n + 1));
-
-    return forkJoin(pokemonIds.map((id) => this.get(id)));
-  }
-
-  private pokemonTransformer(pokemon: Pokemon): DisplayPokemon {
-    const { id, name, height, weight, sprites } = pokemon;
-    
-    return {
-      id,
-      name,
-      height,
-      weight,
-      frontShiny: sprites.front_shiny,
-    }
-  }
-  
-  private get(id: number): Observable<DisplayPokemon> {
-    return this.httpClient
-      .get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      .pipe(
-        map((pokemon) => this.pokemonTransformer(pokemon)),
-        retry(3),
-        catchError((err) => { 
-          console.error(err);
-          return EMPTY; 
-        }),
-      );
-  }
 
   private pokemonDetailsTransformer(pokemon: Pokemon, species: PokemonSpecies): PokemonDetails {
     const { id, name, height, weight, sprites, stats: statistics, abilities: a } = pokemon;
