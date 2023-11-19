@@ -18,10 +18,10 @@ import { PokemonService } from '../services/pokemon.service';
           @for (pokemon of pokemons(); track pokemon.id) {
             <app-pokemon-card [pokemon]="pokemon" />
           }
-        } @loading (after 100ms; minimum 200ms) {
+        } @loading (minimum 500ms) {
           <p>Loading....</p>
-        } @placeholder (minimum 100ms) {
-          <p>No Pokemon Data</p>
+        } @placeholder (minimum 300ms) {
+          <p>Placeholder of Pokemon List</p>
         } @error {
           <p>Failed to load dependencies</p>
         }
@@ -49,12 +49,12 @@ import { PokemonService } from '../services/pokemon.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonListComponent {
-  pageValue = 1;
+  page = 1;
 
-  @Input({ transform: (value: string) => numberAttribute(value, 1) })
-  set page(value: number) {
-    this.pageValue = value;
-    this.currentPage.set(this.pageValue - 1);
+  @Input({ transform: (value: string) => numberAttribute(value, 1), alias: 'page' })
+  set _page(value: number) {
+    this.page = value;
+    this.currentPage.set(this.page - 1);
   } 
 
   pokemonService = inject(PokemonService);
