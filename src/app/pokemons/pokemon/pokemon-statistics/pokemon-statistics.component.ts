@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Statistics } from '../interfaces/pokemon.interface';
+import { Statistics } from './interfaces/pokemon-statistics.interface';
 
 @Component({
   selector: 'app-pokemon-statistics',

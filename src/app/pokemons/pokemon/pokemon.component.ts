@@ -2,11 +2,12 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject, numberAttribute } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PokemonDetails } from '../interfaces/pokemon-details.interface';
-import { PokemonAbilitiesComponent } from '../pokemon-abilities/pokemon-abilities.component';
-import { PokemonPhysicalComponent } from '../pokemon-physical/pokemon-physical.component';
-import { PokemonStatisticsComponent } from '../pokemon-statistics/pokemon-statistics.component';
+import { PokemonDetails } from './interfaces/pokemon-details.interface';
 import { PokemonService } from '../services/pokemon.service';
+import { PokemonAbilitiesComponent } from './pokemon-abilities/pokemon-abilities.component';
+import { PokemonPhysicalComponent } from './pokemon-physical/pokemon-physical.component';
+import { PokemonStatisticsComponent } from './pokemon-statistics/pokemon-statistics.component';
+import { PokemonDetailsService } from './services/pokemon-details.service';
 
 @Component({
   selector: 'app-pokemon',
@@ -60,12 +61,13 @@ export class PokemonComponent implements OnInit {
   @Input({ required: true, transform: (id: string) => numberAttribute(id, 1) })
   id = 1;
 
+  pokemonDetailsService = inject(PokemonDetailsService);
   pokemonService = inject(PokemonService);
   router = inject(Router);
   pokemonDetails$!: Observable<PokemonDetails | undefined>;
 
   ngOnInit(): void {
-    this.pokemonDetails$ = this.pokemonService.getPokemonDetails(this.id);
+    this.pokemonDetails$ = this.pokemonDetailsService.getPokemonDetails(this.id);
   }
 
   backToPage() {

@@ -1,6 +1,6 @@
 import { TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AffiliationPipe } from '../../pipes/affiliation.pipe';
+import { AffiliationPipe } from './pipes/affiliation.pipe';
 
 @Component({
   selector: 'app-pokemon-affliation',
