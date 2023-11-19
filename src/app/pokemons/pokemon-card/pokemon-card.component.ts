@@ -33,7 +33,9 @@ import { DisplayPokemon } from '../interfaces/pokemon.interface';
       border: 1px solid black;
       display: flex;
       padding: 0.75rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
+
+      height: 150px;
     }
 
     .image {

@@ -30,6 +30,9 @@ import { PokemonService } from '../services/pokemon.service';
     </div>
   `,
   styles: [`
+    :root {
+      --card-width: calc((100% - 2 * 0.75rem) / 7);
+    }
     h2 {
       text-decoration: underline;
       font-style: italic;
@@ -44,6 +47,50 @@ import { PokemonService } from '../services/pokemon.service';
     .card-layout {
       display: flex;
       flex-wrap: wrap;
+    }
+
+    .card-layout > * {
+      // flex-basis: calc((100% - 2 * 0.75rem) / 7);
+      flex-basis: var(--card-width);
+      flex-shrink: 1;
+      flex-grow: 0;
+    }    
+
+    @media (max-width: 1440px) {
+      .card-layout > * {
+        // flex-basis: calc((100% - 2 * 0.75rem) / 6);
+        --card-width: calc((100% - 2 * 0.75rem) / 6)
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .card-layout > * {
+\        --card-width: calc((100% - 2 * 0.75rem) / 5)
+      }
+    }
+
+    @media (max-width: 992px) {
+      .card-layout > * {
+        --card-width: calc((100% - 2 * 0.75rem) / 4)
+      }
+    }
+
+    @media (max-width: 758px) {
+      .card-layout > * {
+        --card-width: calc((100% - 2 * 0.75rem) / 3)
+      }
+    }
+
+    @media (max-width: 576px) {
+      .card-layout > * {
+        --card-width: calc((100% - 2 * 0.75rem) / 2)
+      }
+    }
+
+    @media (max-width: 360px) {
+      .card-layout > * {
+        --card-width: calc((100% - 2 * 0.75rem))
+      }
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
