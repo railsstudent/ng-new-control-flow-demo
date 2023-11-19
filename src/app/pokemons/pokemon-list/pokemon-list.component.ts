@@ -30,9 +30,6 @@ import { PokemonService } from '../services/pokemon.service';
     </div>
   `,
   styles: [`
-    :root {
-      --card-width: calc((100% - 2 * 0.75rem) / 7);
-    }
     h2 {
       text-decoration: underline;
       font-style: italic;
@@ -50,46 +47,45 @@ import { PokemonService } from '../services/pokemon.service';
     }
 
     .card-layout > * {
-      // flex-basis: calc((100% - 2 * 0.75rem) / 7);
-      flex-basis: var(--card-width);
+      --num-cards: 7;
+      flex-basis: calc((100% - 2 * 0.75rem) / var(--num-cards));
       flex-shrink: 1;
       flex-grow: 0;
     }    
 
     @media (max-width: 1440px) {
       .card-layout > * {
-        // flex-basis: calc((100% - 2 * 0.75rem) / 6);
-        --card-width: calc((100% - 2 * 0.75rem) / 6)
+        --num-cards: 6;
       }
     }
 
     @media (max-width: 1200px) {
       .card-layout > * {
-\        --card-width: calc((100% - 2 * 0.75rem) / 5)
+        --num-cards: 5;
       }
     }
 
     @media (max-width: 992px) {
       .card-layout > * {
-        --card-width: calc((100% - 2 * 0.75rem) / 4)
+        --num-cards: 4;
       }
     }
 
-    @media (max-width: 758px) {
+    @media (max-width: 768px) {
       .card-layout > * {
-        --card-width: calc((100% - 2 * 0.75rem) / 3)
+        --num-cards: 3;
       }
     }
 
     @media (max-width: 576px) {
       .card-layout > * {
-        --card-width: calc((100% - 2 * 0.75rem) / 2)
+        --num-cards: 2;
       }
     }
 
     @media (max-width: 360px) {
       .card-layout > * {
-        --card-width: calc((100% - 2 * 0.75rem))
+        --num-cards: 1;
       }
     }
   `],
