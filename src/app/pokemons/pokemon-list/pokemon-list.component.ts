@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, numberAttribute } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 import { PokemonPaginationComponent } from '../pokemon-pagination/pokemon-pagination.component';
 import { PokemonService } from '../services/pokemon.service';
-import { toPage } from '../utilities/page';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -52,7 +51,7 @@ import { toPage } from '../utilities/page';
 export class PokemonListComponent {
   pageValue = 1;
 
-  @Input({ transform: (value: string) => toPage(value, 1) })
+  @Input({ transform: (value: string) => numberAttribute(value, 1) })
   set page(value: number) {
     this.pageValue = value;
     this.currentPage.set(this.pageValue - 1);
