@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Ability } from './interfaces/pokemon-abilities.interface';
+import { Ability } from '../../interfaces/pokemon-abilities.interface';
 
 @Component({
   selector: 'app-pokemon-abilities',

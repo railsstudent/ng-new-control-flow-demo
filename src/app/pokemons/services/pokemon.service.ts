@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { EMPTY, Observable, catchError, forkJoin, map, retry } from 'rxjs';
 import { DisplayPokemon, Pokemon } from '../interfaces/pokemon.interface';
+import { Ability } from '../interfaces/pokemon-abilities.interface';
+import { Statistics } from '../interfaces/pokemon-statistics.interface';
 
 const PAGE_SIZE = 30;
 
@@ -26,7 +28,18 @@ export class PokemonService {
   }
 
   private pokemonTransformer(pokemon: Pokemon): DisplayPokemon {
-    const { id, name, height, weight, sprites, abilities, stats } = pokemon;
+    const { id, name, height, weight, sprites, abilities: a, stats: statistics } = pokemon;
+
+    const abilities: Ability[] = a.map(({ ability, is_hidden }) => ({
+      name: ability.name,
+      isHidden: is_hidden
+    }));
+  
+    const stats: Statistics[] = statistics.map(({ stat, effort, base_stat }) => ({
+      name: stat.name,
+      effort,
+      baseStat: base_stat,
+    }));
     
     return {
       id,

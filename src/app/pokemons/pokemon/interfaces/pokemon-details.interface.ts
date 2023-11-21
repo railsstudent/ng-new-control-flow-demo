@@ -1,6 +1,6 @@
+import { Ability } from '../../interfaces/pokemon-abilities.interface';
+import { Statistics } from '../../interfaces/pokemon-statistics.interface';
 import { Resource } from '../../interfaces/pokemon.interface';
-import { Ability } from '../pokemon-abilities/interfaces/pokemon-abilities.interface';
-import { Statistics } from '../pokemon-statistics/interfaces/pokemon-statistics.interface';
 
 export interface PokemonSpecies {
     id: number;

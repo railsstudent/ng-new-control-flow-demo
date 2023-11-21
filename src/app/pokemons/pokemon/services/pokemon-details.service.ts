@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { EMPTY, Observable, catchError, iif, map, of, retry, switchMap } from 'rxjs';
+import { Ability } from '../../interfaces/pokemon-abilities.interface';
+import { Statistics } from '../../interfaces/pokemon-statistics.interface';
 import { DisplayPokemon, Pokemon } from '../../interfaces/pokemon.interface';
 import { PokemonDetails, PokemonSpecies } from '../interfaces/pokemon-details.interface';
-import { Ability } from '../pokemon-abilities/interfaces/pokemon-abilities.interface';
-import { Statistics } from '../pokemon-statistics/interfaces/pokemon-statistics.interface';
 
 function isDisplayPokemon(pokemon: Pokemon | DisplayPokemon): pokemon is DisplayPokemon {
-  return 'frontShiny' in pokemon;
+  return typeof pokemon !== 'undefined' &&  'frontShiny' in pokemon;
 }
-
 
 const PAGE_SIZE = 30;
 
@@ -19,32 +18,42 @@ const PAGE_SIZE = 30;
 export class PokemonDetailsService {
   private readonly httpClient = inject(HttpClient);
 
+  private getDetails(pokemon: Pokemon | DisplayPokemon): { frontShiny: string, abilities: Ability[], stats: Statistics[] } {
+    if (isDisplayPokemon(pokemon)) {
+      return {
+        frontShiny: pokemon.frontShiny,
+        abilities: pokemon.abilities,
+        stats: pokemon.stats
+      }
+    }
+
+    return {
+      frontShiny: pokemon.sprites.front_shiny,
+      stats: pokemon.stats.map(({ stat, effort, base_stat }) => ({
+        name: stat.name,
+        effort,
+        baseStat: base_stat,
+      })),
+      abilities: pokemon.abilities.map(({ ability, is_hidden }) => ({
+        name: ability.name,
+        isHidden: is_hidden
+      })),
+    }
+  }
+
   private pokemonDetailsTransformer(pokemon: Pokemon | DisplayPokemon, species: PokemonSpecies): PokemonDetails {
     const { id, name, height, weight, stats: statistics, abilities: a } = pokemon;
-    const frontShiny = isDisplayPokemon(pokemon) ? pokemon.frontShiny : pokemon.sprites.front_shiny;
-
-    const abilities: Ability[] = a.map(({ ability, is_hidden }) => ({
-      name: ability.name,
-      isHidden: is_hidden
-    }));
-  
-    const stats: Statistics[] = statistics.map(({ stat, effort, base_stat }) => ({
-      name: stat.name,
-      effort,
-      baseStat: base_stat,
-    }));
-  
+    const details = this.getDetails(pokemon);
+    
     return {
+      ...details,
       id,
       name,
       height,
       weight,
-      frontShiny,
       color: species?.color?.name ?? '',
       shape: species?.shape?.name ?? '',
-      evolvesFromSpecies: species?.evolves_from_species?.name || '',
-      stats,
-      abilities,
+      evolvesFromSpecies: species?.evolves_from_species?.name ?? '',
     }
   }
 

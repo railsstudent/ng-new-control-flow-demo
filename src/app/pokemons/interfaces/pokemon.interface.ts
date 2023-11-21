@@ -1,3 +1,6 @@
+import { Ability } from './pokemon-abilities.interface';
+import { Statistics } from './pokemon-statistics.interface';
+
 export interface Resource {
     name: string;
     url: string;
@@ -24,7 +27,9 @@ export interface Pokemon {
     }[]
 }
   
-export type DisplayPokemon = Omit<Pokemon, 'sprites'> & {
+export type DisplayPokemon = Omit<Pokemon, 'sprites' | 'stats' | 'abilities'> & {
     frontShiny: string;
+    abilities: Ability[];
+    stats: Statistics[];
 }
 
