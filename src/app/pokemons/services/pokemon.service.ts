@@ -26,13 +26,15 @@ export class PokemonService {
   }
 
   private pokemonTransformer(pokemon: Pokemon): DisplayPokemon {
-    const { id, name, height, weight, sprites } = pokemon;
+    const { id, name, height, weight, sprites, abilities, stats } = pokemon;
     
     return {
       id,
       name,
       height,
       weight,
+      abilities,
+      stats,
       frontShiny: sprites.front_shiny,
     }
   }

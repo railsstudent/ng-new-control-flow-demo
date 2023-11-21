@@ -17,7 +17,7 @@ import { DisplayPokemon } from '../interfaces/pokemon.interface';
         </label>
         <label for="name">
           <span>Name: </span>
-          <a [routerLink]="['pokemon', pokemon.id]"><span id="name" name="name">{{ pokemon.name }}</span></a>
+          <a [routerLink]="['pokemon', pokemon.id]" [state]="{ pokemon }"><span id="name" name="name">{{ pokemon.name }}</span></a>
         </label>
         <label for="weight">
           <span>Weight: </span><span id="weight" name="weight">{{ pokemon.weight }}</span>

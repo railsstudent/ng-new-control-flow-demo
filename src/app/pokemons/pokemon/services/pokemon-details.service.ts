@@ -1,10 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { EMPTY, Observable, catchError, map, retry, switchMap } from 'rxjs';
-import { Pokemon } from '../../interfaces/pokemon.interface';
+import { EMPTY, Observable, catchError, iif, map, of, retry, switchMap } from 'rxjs';
+import { DisplayPokemon, Pokemon } from '../../interfaces/pokemon.interface';
 import { PokemonDetails, PokemonSpecies } from '../interfaces/pokemon-details.interface';
 import { Ability } from '../pokemon-abilities/interfaces/pokemon-abilities.interface';
 import { Statistics } from '../pokemon-statistics/interfaces/pokemon-statistics.interface';
+
+function isDisplayPokemon(pokemon: Pokemon | DisplayPokemon): pokemon is DisplayPokemon {
+  return 'frontShiny' in pokemon;
+}
+
 
 const PAGE_SIZE = 30;
 
@@ -14,8 +19,9 @@ const PAGE_SIZE = 30;
 export class PokemonDetailsService {
   private readonly httpClient = inject(HttpClient);
 
-  private pokemonDetailsTransformer(pokemon: Pokemon, species: PokemonSpecies): PokemonDetails {
-    const { id, name, height, weight, sprites, stats: statistics, abilities: a } = pokemon;
+  private pokemonDetailsTransformer(pokemon: Pokemon | DisplayPokemon, species: PokemonSpecies): PokemonDetails {
+    const { id, name, height, weight, stats: statistics, abilities: a } = pokemon;
+    const frontShiny = isDisplayPokemon(pokemon) ? pokemon.frontShiny : pokemon.sprites.front_shiny;
 
     const abilities: Ability[] = a.map(({ ability, is_hidden }) => ({
       name: ability.name,
@@ -33,7 +39,7 @@ export class PokemonDetailsService {
       name,
       height,
       weight,
-      frontShiny: sprites.front_shiny,
+      frontShiny,
       color: species?.color?.name ?? '',
       shape: species?.shape?.name ?? '',
       evolvesFromSpecies: species?.evolves_from_species?.name || '',
@@ -42,10 +48,12 @@ export class PokemonDetailsService {
     }
   }
 
-  getPokemonDetails(id: number): Observable<PokemonDetails> {
-    return this.httpClient.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      .pipe(
-        switchMap((pokemon) => 
+  getPokemonDetails(id: number, displayPokemon: DisplayPokemon | undefined): Observable<PokemonDetails> {
+    const getPokemon$ = iif(() => !displayPokemon, 
+      this.httpClient.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`), 
+      of(displayPokemon as DisplayPokemon));
+    
+    return getPokemon$.pipe(switchMap((pokemon) => 
         this.httpClient.get<PokemonSpecies>(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`)
           .pipe(
             map((species) => this.pokemonDetailsTransformer(pokemon, species)),

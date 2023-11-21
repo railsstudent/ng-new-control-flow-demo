@@ -24,7 +24,7 @@ export interface Pokemon {
     }[]
 }
   
-export type DisplayPokemon = Omit<Pokemon, 'sprites'| 'stats' | 'abilities'> & {
+export type DisplayPokemon = Omit<Pokemon, 'sprites'> & {
     frontShiny: string;
 }
 

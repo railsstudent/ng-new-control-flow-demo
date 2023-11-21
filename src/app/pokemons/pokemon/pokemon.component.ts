@@ -2,8 +2,8 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject, numberAttribute } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PokemonDetails } from './interfaces/pokemon-details.interface';
 import { PokemonService } from '../services/pokemon.service';
+import { PokemonDetails } from './interfaces/pokemon-details.interface';
 import { PokemonAbilitiesComponent } from './pokemon-abilities/pokemon-abilities.component';
 import { PokemonPhysicalComponent } from './pokemon-physical/pokemon-physical.component';
 import { PokemonStatisticsComponent } from './pokemon-statistics/pokemon-statistics.component';
@@ -67,7 +67,7 @@ export class PokemonComponent implements OnInit {
   pokemonDetails$!: Observable<PokemonDetails | undefined>;
 
   ngOnInit(): void {
-    this.pokemonDetails$ = this.pokemonDetailsService.getPokemonDetails(this.id);
+    this.pokemonDetails$ = this.pokemonDetailsService.getPokemonDetails(this.id, history.state?.pokemon);
   }
 
   backToPage() {
