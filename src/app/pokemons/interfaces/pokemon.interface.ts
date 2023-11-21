@@ -5,7 +5,19 @@ export interface Resource {
     name: string;
     url: string;
 }
-  
+
+export interface RawStats {
+  base_stat: number;
+  effort: number;
+  stat: Resource;
+}
+ 
+export interface RawAbility {
+  ability: Resource;
+  slot: number;
+  is_hidden: boolean;
+}
+
 export interface Pokemon {
     id: number;
     name: string;
@@ -15,16 +27,8 @@ export interface Pokemon {
       back_shiny: string;
       front_shiny: string;
     },
-    stats: {
-      base_stat: number;
-      effort: number;
-      stat: Resource;
-    } [],
-    abilities: {
-      ability: Resource;
-      slot: number;
-      is_hidden: boolean;
-    }[]
+    stats: RawStats [],
+    abilities: RawAbility[]
 }
   
 export type DisplayPokemon = Omit<Pokemon, 'sprites' | 'stats' | 'abilities'> & {

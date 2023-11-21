@@ -5,6 +5,7 @@ import { Ability } from '../../interfaces/pokemon-abilities.interface';
 import { Statistics } from '../../interfaces/pokemon-statistics.interface';
 import { DisplayPokemon, Pokemon } from '../../interfaces/pokemon.interface';
 import { PokemonDetails, PokemonSpecies } from '../interfaces/pokemon-details.interface';
+import { transformSpecialPowers } from '../../utilities/transform-special-powers.util';
 
 function isDisplayPokemon(pokemon: Pokemon | DisplayPokemon): pokemon is DisplayPokemon {
   return typeof pokemon !== 'undefined' &&  'frontShiny' in pokemon;
@@ -27,17 +28,12 @@ export class PokemonDetailsService {
       }
     }
 
+    const { abilities, stats } = transformSpecialPowers(pokemon.abilities, pokemon.stats);
+
     return {
       frontShiny: pokemon.sprites.front_shiny,
-      stats: pokemon.stats.map(({ stat, effort, base_stat }) => ({
-        name: stat.name,
-        effort,
-        baseStat: base_stat,
-      })),
-      abilities: pokemon.abilities.map(({ ability, is_hidden }) => ({
-        name: ability.name,
-        isHidden: is_hidden
-      })),
+      stats,
+      abilities,
     }
   }
 
