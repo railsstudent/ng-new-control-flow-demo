@@ -11,7 +11,7 @@ const PAGE_SIZE = 30;
 @Injectable({
   providedIn: 'root'
 })
-export class PokemonService {
+export class PokemonListService {
   private readonly httpClient = inject(HttpClient);
 
   currentPage = signal(0);

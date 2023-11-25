@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { PokemonService } from '../services/pokemon.service';
+import { PokemonListService } from '../services/pokemon-list.service';
 
 @Component({
   selector: 'app-pokemon-pagination',
@@ -42,5 +42,5 @@ import { PokemonService } from '../services/pokemon.service';
 })
 export class PokemonPaginationComponent {
   pages = [...Array(10).keys()];
-  currentPage = inject(PokemonService).currentPage;
+  currentPage = inject(PokemonListService).currentPage;
 }

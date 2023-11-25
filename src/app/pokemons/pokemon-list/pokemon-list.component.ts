@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs';
 import { DisplayPokemon } from '../interfaces/pokemon.interface';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 import { PokemonPaginationComponent } from '../pokemon-pagination/pokemon-pagination.component';
-import { PokemonService } from '../services/pokemon.service';
+import { PokemonListService } from '../services/pokemon-list.service';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -100,10 +100,10 @@ export class PokemonListComponent {
     this.currentPage.set(this.page - 1);
   } 
 
-  pokemonService = inject(PokemonService);
-  currentPage = this.pokemonService.currentPage;
+  pokemonLisService = inject(PokemonListService);
+  currentPage = this.pokemonLisService.currentPage;
   pokemons = toSignal(
-    toObservable(this.currentPage).pipe(switchMap(() => this.pokemonService.getPokemons())), 
+    toObservable(this.currentPage).pipe(switchMap(() => this.pokemonLisService.getPokemons())), 
     { initialValue: [] as DisplayPokemon[] }
   );
 }
