@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject, numberAttribute } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PokemonService } from '../services/pokemon.service';
+import { PokemonListService } from '../services/pokemon-list.service';
 import { PokemonDetails } from './interfaces/pokemon-details.interface';
 import { PokemonAbilitiesComponent } from './pokemon-abilities/pokemon-abilities.component';
 import { PokemonPhysicalComponent } from './pokemon-physical/pokemon-physical.component';
@@ -62,7 +62,7 @@ export class PokemonComponent implements OnInit {
   id = 1;
 
   pokemonDetailsService = inject(PokemonDetailsService);
-  pokemonService = inject(PokemonService);
+  pokemonListService = inject(PokemonListService);
   router = inject(Router);
   pokemonDetails$!: Observable<PokemonDetails | undefined>;
 
@@ -71,8 +71,8 @@ export class PokemonComponent implements OnInit {
   }
 
   backToPage() {
-    const page = this.pokemonService.getPage(this.id);
-    this.pokemonService.currentPage.set(page - 1);
+    const page = this.pokemonListService.getPage(this.id);
+    this.pokemonListService.currentPage.set(page - 1);
     this.router.navigate(['/list'], { queryParams: { page }});
   }
 }
