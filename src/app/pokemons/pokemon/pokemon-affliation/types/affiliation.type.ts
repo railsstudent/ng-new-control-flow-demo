@@ -1,15 +1,15 @@
 export type PokemonAffiliation = {
   type: 'pikachu',
-  affiliation: 'Ash',
+  owner: 'Ash',
 } | {
   type: 'meowth',
-  affiliation: 'Rocket',
+  owner: 'Rocket',
 } | {
   type: 'staryu',
-  affiliation: 'Misty',
+  owner: 'Misty',
 } | {
   type: 'steelix',
-  affiliation: 'Brock',
+  owner: 'Brock',
 } | {
   type: 'unknown',
   warningMessage: 'Your team is unknown',
