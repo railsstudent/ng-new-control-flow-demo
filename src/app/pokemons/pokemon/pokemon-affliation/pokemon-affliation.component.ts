@@ -31,4 +31,17 @@ import { AffiliationPipe } from './pipes/affiliation.pipe';
 export class PokemonAffliationComponent {
   @Input({ required: true })
   name = '';
+
+  @Input({ required: true })
+  pokemonTeam!: {
+    name: 'pikachu'
+  } | {
+    name: 'meowth'
+  } | {
+    name: 'staryu'
+  } | {
+    name: 'steelix'
+  } | {
+    name: string
+  };
 }

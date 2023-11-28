@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { PokemonDetails } from '../interfaces/pokemon-details.interface';
 import { PokemonAffliationComponent } from '../pokemon-affliation/pokemon-affliation.component';
 
@@ -44,7 +44,53 @@ import { PokemonAffliationComponent } from '../pokemon-affliation/pokemon-afflia
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PokemonPhysicalComponent {
+export class PokemonPhysicalComponent implements OnInit {
   @Input({ required: true })
   pokemonDetails!: PokemonDetails;
+
+  pokemonAffiliation!: {
+    type: 'pikachu',
+    affiliation: 'Ash',
+  } | {
+    type: 'meowth',
+    affiliation: 'Rocket',
+  } | {
+    type: 'staryu',
+    affiliation: 'Misty',
+  } | {
+    type: 'steelix',
+    affiliation: 'Brock',
+  } | {
+    type: 'unknown',
+    warningMessage: 'Your team is unknown',
+  }
+
+  ngOnInit(): void {
+    if (this.pokemonDetails.name === 'pikachu') {
+      this.pokemonAffiliation = {
+        type: 'pikachu',
+        affiliation: 'Ash',
+      }
+    } else if (this.pokemonDetails.name === 'meowth') { 
+      this.pokemonAffiliation = {
+        type: 'meowth',
+        affiliation: 'Rocket',
+      }
+    } else if (this.pokemonDetails.name === 'staryu') {
+      this.pokemonAffiliation = {
+        type: 'staryu',
+        affiliation: 'Misty',
+      }
+    } else if (this.pokemonDetails.name === 'steelix') {
+      this.pokemonAffiliation = {
+        type: 'steelix',
+        affiliation: 'Brock',
+      }
+    } else {
+      this.pokemonAffiliation = {
+        type: 'unknown',
+        warningMessage: 'Your team is unknown'
+      }
+    }
+  }
 }
