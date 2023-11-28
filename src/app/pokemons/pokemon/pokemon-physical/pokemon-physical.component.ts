@@ -1,7 +1,8 @@
 import { TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { PokemonDetails } from '../interfaces/pokemon-details.interface';
 import { PokemonAffliationComponent } from '../pokemon-affliation/pokemon-affliation.component';
+import { PokemonAffiliation } from '../pokemon-affliation/types/affiliation.type';
 
 @Component({
   selector: 'app-pokemon-physical',
@@ -9,7 +10,7 @@ import { PokemonAffliationComponent } from '../pokemon-affliation/pokemon-afflia
   imports: [TitleCasePipe, PokemonAffliationComponent],
   template: `
     <img [src]="pokemonDetails.frontShiny" alt="pokemon image" width="100" height="100" />
-    <app-pokemon-affliation [name]="pokemonDetails.name" />
+    <app-pokemon-affliation [affiliation]="pokemonAffiliation" />
     <div class="physical">
       <label for="id">
         <span>Id: </span><span id="id" name="id">{{ pokemonDetails.id }}</span>            
@@ -44,7 +45,38 @@ import { PokemonAffliationComponent } from '../pokemon-affliation/pokemon-afflia
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PokemonPhysicalComponent {
+export class PokemonPhysicalComponent implements OnInit {
   @Input({ required: true })
   pokemonDetails!: PokemonDetails;
+
+  pokemonAffiliation!: PokemonAffiliation;
+
+  ngOnInit(): void {
+    if (this.pokemonDetails.name === 'pikachu') {
+      this.pokemonAffiliation = {
+        type: 'pikachu',
+        owner: 'Ash',
+      }
+    } else if (this.pokemonDetails.name === 'meowth') { 
+      this.pokemonAffiliation = {
+        type: 'meowth',
+        owner: 'Rocket',
+      }
+    } else if (this.pokemonDetails.name === 'staryu') {
+      this.pokemonAffiliation = {
+        type: 'staryu',
+        owner: 'Misty',
+      }
+    } else if (this.pokemonDetails.name === 'steelix') {
+      this.pokemonAffiliation = {
+        type: 'steelix',
+        owner: 'Brock',
+      }
+    } else {
+      this.pokemonAffiliation = {
+        type: 'unknown',
+        warningMessage: 'Your team is unknown'
+      }
+    }
+  }
 }

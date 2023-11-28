@@ -1,23 +1,27 @@
 import { TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AffiliationPipe } from './pipes/affiliation.pipe';
+import { PokemonAffiliation } from './types/affiliation.type';
 
 @Component({
   selector: 'app-pokemon-affliation',
   standalone: true,
   imports: [TitleCasePipe, AffiliationPipe],
   template: `
-    @switch (name) {
+    @switch (affiliation.type) {
       @case ('pikachu') {
-        <p class="team">{{ name | titlecase | affiliation:'Ash' }}</p>
+        <p class="team">{{ affiliation.type | titlecase | affiliation:affiliation.owner }}</p>
       } @case ('meowth') {
-        <p class="team">{{ name | titlecase | affiliation:'Rocket' }}</p>
+        <p class="team">{{ affiliation.type | titlecase | affiliation:affiliation.owner }}</p>
       } @case ('staryu') {
-        <p class="team">{{ name | titlecase | affiliation:'Misty' }}</p>
+        <p class="team">{{ affiliation.type | titlecase | affiliation:affiliation.owner }}</p>
       } @case ('steelix') {
-        <p class="team">{{ name | titlecase | affiliation:'Brock' }}</p>
-      } @default {
-        <p class="team">Your team is unknown</p>
+        <p class="team">{{ affiliation.type | titlecase | affiliation:affiliation.owner }}</p>
+      } @case ('unknown') {
+        <p class="team">{{ affiliation.warningMessage }}</p>
+      }
+       @default {
+        <p class="team">This should not appear</p>
       }
     }
   `,
@@ -30,5 +34,5 @@ import { AffiliationPipe } from './pipes/affiliation.pipe';
 })
 export class PokemonAffliationComponent {
   @Input({ required: true })
-  name = '';
+  affiliation!: PokemonAffiliation;
 }
