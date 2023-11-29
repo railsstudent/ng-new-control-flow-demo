@@ -19,8 +19,7 @@ import { PokemonAffiliation } from './types/affiliation.type';
         <p class="team">{{ affiliation.type | titlecase | affiliation:affiliation.owner }}</p>
       } @case ('unknown') {
         <p class="team">{{ affiliation.warningMessage }}</p>
-      }
-       @default {
+      } @default {
         <p class="team">This should not appear</p>
       }
     }

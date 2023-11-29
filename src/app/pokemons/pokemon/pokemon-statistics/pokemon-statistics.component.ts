@@ -6,10 +6,10 @@ import { Statistics } from '../../interfaces/pokemon-statistics.interface';
   standalone: true,
   template: `
     <p class="heading">Statistics</p>
-    @for (stat of statistics; track stat.name) {
+    @for (stat of statistics; track stat.name; let idx = $index) {
       <div class="stats">
         <label for="stat_name">
-          <span>Name: </span><span id="stat_name" name="stat_name">{{ stat.name }}</span>            
+          <span>{{idx + 1}}. Name: </span><span id="stat_name" name="stat_name">{{ stat.name }}</span>            
         </label>
         <label for="stat_effort">
           <span>Effort: </span><span id="stat_effort" name="stat_effort">{{ stat.effort }}</span>            

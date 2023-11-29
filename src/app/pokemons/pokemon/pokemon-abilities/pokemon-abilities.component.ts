@@ -6,10 +6,10 @@ import { Ability } from '../../interfaces/pokemon-abilities.interface';
   standalone: true,
   template: `
     <p class="heading">Abilities</p>
-    @for (ability of abilities; track ability.name) {
+    @for (ability of abilities; track ability.name; let idx = $index) {
       <div class="abilities">
         <label for="ability_name">
-          <span>Name: </span><span id="ability_name" name="ability_name">{{ ability.name }}</span>            
+          <span>{{ idx + 1 }}. Name: </span><span id="ability_name" name="ability_name">{{ ability.name }}</span>            
         </label>
         <label for="ability_isHidden">
           <span>Effort: </span><span id="ability_isHidden" name="ability_isHidden">{{ ability.isHidden ? 'Yes' : 'No' }}</span>            
